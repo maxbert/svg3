@@ -18,22 +18,34 @@ var createcirc = function(e){
 var event = function(e){
     
     console.log('circle' );
-    this.setAttribute("fill",'green');
-    //e.stopPropagation();
-};
-
-var addcirc = function(e){
-    if(this == e.target){
-	console.log('svg' + this);
-	var d = createcirc();
-	d.addEventListener('click',event,true);
-	d.setAttribute('cx', e.offsetX);
-	d.setAttribute('cy', e.offsetY);
-	svg.appendChild(d);
+    if(this.getAttribute('fill') == 'green'){
+	this.parentElement.removeChild(this);
+    }else{
+	this.setAttribute("fill",'green');
+	e.stopPropagation();
     };
 };
+
+
+var addcircH = function(x, y){
+    if (x < 5 && y < 5){
+	x = Math.random() * w;
+	y = Math.random() * h;
+    };
+    console.log('svg' + this);
+    var d = createcirc();
+    d.addEventListener('click',event,true);
+    d.setAttribute('cx', x);
+    d.setAttribute('cy', y);
+    svg.appendChild(d);
     
-    
+};
+var addcirc = function(e) {
+    var x = e.offsetX;
+    var y = e.offsetY;
+    addcircH(x, y);
+} 
+   
 svg.addEventListener('click', addcirc);
 var but = document.getElementById("clear");
 var clearer = function(e){
