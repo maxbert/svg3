@@ -44,6 +44,7 @@ var addcircH = function(x, y){
     var direction = false;
     var ydirection = false;
     var rand = Math.random() * 3
+    var randx = Math.random() * 3
     // Movement
 
     var move = function() {
@@ -53,9 +54,9 @@ var addcircH = function(x, y){
 	    
 	    
 	    if (direction == false){
-		x++;
+		x+=randx;
 	    }else{
-		x--;
+		x-=randx;
 	    };
 
 	    if (ydirection == false){
@@ -97,6 +98,7 @@ var clearer = function(e){
     while(svg.hasChildNodes()){
 	svg.removeChild(svg.lastChild);
     };
+    moving = false;
 };
 but.addEventListener('click', clearer);
 
