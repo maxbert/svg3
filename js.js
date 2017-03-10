@@ -16,28 +16,29 @@ var createcirc = function(e){
     return c;
 };
 
-var event = function(e){
-    
-    console.log('circle' );
-    if(this.getAttribute('fill') == 'green'){
+
+var change = function(e) {
+    if (this.getAttribute('fill') == 'green') {
+	addcircH(Math.random() * w,
+		 Math.random() * h);
 	this.parentElement.removeChild(this);
-    }else{
+    } else {
 	this.setAttribute("fill",'green');
-	e.stopPropagation();
-    };
-};
+    }
+    e.stopPropagation();
+} 
 
-
+var addCirc = function(e) {
+    var x = e.offsetX;
+    var y = e.offsetY;
+    addcircH(x, y);    
+}
 var addcircH = function(x, y){
-
     // Creation
-    if (x < 5 && y < 5){
-	x = Math.random() * w;
-	y = Math.random() * h;
-    };
-    console.log('svg' + this);
+    console.log(x);
+    console.log(y);
     var d = createcirc();
-    d.addEventListener('click',event,true);
+    d.addEventListener('click', change, true);
     d.setAttribute('cx', x);
     d.setAttribute('cy', y);
     svg.appendChild(d);
@@ -85,13 +86,12 @@ var addcircH = function(x, y){
     };
     move();
 };
-var addcirc = function(e) {
-    var x = e.offsetX;
-    var y = e.offsetY;
-    addcircH(x, y);
-} 
-   
-svg.addEventListener('click', addcirc);
+
+
+
+
+
+svg.addEventListener('click', addCirc);
 var but = document.getElementById("clear");
 var clearer = function(e){
     console.log('hi3');
@@ -103,3 +103,5 @@ var clearer = function(e){
 but.addEventListener('click', clearer);
 
 document.getElementById('move').addEventListener('click', function(e){moving = true;});
+
+console.log("Loaded js.")
