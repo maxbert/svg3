@@ -31,9 +31,9 @@ var change = function(e) {
 var addCirc = function(e) {
     var x = e.offsetX;
     var y = e.offsetY;
-    addcircH(x, y);    
+    addcircH(x, y, 50, false);    
 }
-var addcircH = function(x, y){
+var addcircH = function(x, y, r, d){
     // Creation
     console.log(x);
     console.log(y);
@@ -41,15 +41,22 @@ var addcircH = function(x, y){
     d.addEventListener('click', change, true);
     d.setAttribute('cx', x);
     d.setAttribute('cy', y);
+    d.setAttribute('r', r);
     svg.appendChild(d);
-    var direction = false;
+   
+	
+    var direction = d;
     var ydirection = false;
-    var rand = Math.random() * 3
-    var randx = Math.random() * 3
+    var rand = Math.random() * 3 + 1
+    var randx = Math.random() * 3 + 1
     // Movement
 
     var move = function() {
 	if (moving) {
+	    var side = "left";
+	    if (x > w/2){
+		side = "right";
+	    };
 	    d.setAttribute("cy", y);
 	    d.setAttribute("cx", x);
 	    
@@ -78,8 +85,18 @@ var addcircH = function(x, y){
 	    if (y <=  0){
 		ydirection = false;
 	    };
-	    //console.log(d);
-	    
+
+	    if(x < w/2 && side == "right") {
+		r /= 2;
+		d.setAttribute("r", r);
+		addcircH(x,y,r, false );
+	    };
+	    if( (x > w/2 && side == "left")) {
+		   r /= 2;
+		   d.setAttribute("r", r);
+		   addcircH(x,y,r, true);
+	       };
+	       
 	};
 	window.requestAnimationFrame( move )
 
